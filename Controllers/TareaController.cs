@@ -27,6 +27,41 @@ namespace API_PRUEBA_PROGRESO3.Controllers
             return Ok(tareas);
         }
 
+        [HttpGet("/estadoTarea/")]
+        public IActionResult GetEstado(string estadoTarea)
+        {
+            try
+            {
+                var tareas = _dbContext.Tarea.ToList();
+                if (estadoTarea != null) 
+                {
+                    tareas = tareas.Where(x => x.estadoTarea.ToLower().IndexOf(estadoTarea) > -1).ToList();
+                }
+                return Ok(tareas);
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("/nombreTarea/")]
+        public IActionResult GetNombre(string nombreTarea)
+        {
+            try
+            {
+                var tareas = _dbContext.Tarea.ToList();
+                if (nombreTarea != null)
+                {
+                    tareas = tareas.Where(x => x.nombreTarea.ToLower().IndexOf(nombreTarea) > -1).ToList();
+                }
+                return Ok(tareas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         // GET api/<TareaController>
         [HttpGet("{idTarea}")]
         public async Task<IActionResult> Get(int idTarea)
